@@ -1,5 +1,6 @@
 package org.launchcode.techjobs_oo;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Job {
@@ -13,9 +14,8 @@ public class Job {
     private PositionType positionType;
     private CoreCompetency coreCompetency;
 
-    // TODO: Add two constructors - one to initialize a unique ID and a second to initialize the
-    //  other five fields. The second constructor should also call the first in order to initialize
-    //  the 'id' field.
+    // constructors
+
     public Job() {
         id = nextId;
         nextId++;
@@ -29,9 +29,39 @@ public class Job {
         this.positionType = positionType;
         this.coreCompetency = coreCompetency;
     }
-    // TODO: Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
-    //  match.
 
+
+//    custom to string method
+
+    @Override
+    public String toString(){
+        String jobListing = "";
+        ArrayList<String> labels = new ArrayList<>();
+        labels.add("Name: ");
+        labels.add("Employer: ");
+        labels.add("Location: ");
+        labels.add("Position Type: ");
+        labels.add("Core Competency: ");
+
+        ArrayList<String> fieldData = new ArrayList<>();
+        fieldData.add(this.getName());
+        fieldData.add(this.getEmployer().getValue());
+        fieldData.add(this.getLocation().getValue());
+        fieldData.add(this.getPositionType().getValue());
+        fieldData.add(this.getCoreCompetency().getValue());
+
+        for (int i = 0; i<labels.size(); i++) {
+            if (fieldData.get(i).isBlank()) {
+                jobListing += labels.get(i) + "Data not available\n";
+            } else {
+                jobListing += labels.get(i) + fieldData.get(i) + "\n";
+            }
+        }
+
+        return  "\n"+ "ID: " + this.getId() + "\n" + jobListing;
+    }
+
+    //      custom equals and hashCode methods.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,8 +75,7 @@ public class Job {
         return Objects.hash(id, name, employer, location, positionType, coreCompetency);
     }
 
-    // TODO: Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID
-    //  and id.
+    // getters and setters for each field EXCEPT nextID and id.
 
 
     public String getName() {

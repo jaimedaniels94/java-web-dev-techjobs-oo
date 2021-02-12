@@ -12,7 +12,7 @@ public class JobTest {
     Job emptyJobOne;
     Job emptyJobTwo;
     Job testJobOne;
-    Job testJobTwo;
+    Job emptyFieldJob;
     Job jobEqualityOne;
     Job jobEqualityTwo;
 
@@ -21,7 +21,7 @@ public class JobTest {
         emptyJobOne = new Job();
         emptyJobTwo = new Job();
         testJobOne = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        testJobTwo = new Job();
+        emptyFieldJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType(""), new CoreCompetency("Persistence"));
         jobEqualityOne = new Job("dummy", new Employer("dummy"), new Location("dummy"), new PositionType("dummy"), new CoreCompetency("dummy"));
         jobEqualityTwo = new Job("dummy", new Employer("dummy"), new Location("dummy"), new PositionType("dummy"), new CoreCompetency("dummy"));
 
@@ -48,5 +48,27 @@ public class JobTest {
     public void testJobsForEquality(){
         assertFalse(jobEqualityOne.equals(jobEqualityTwo));
     }
+
+    @Test
+    public void testBeginsWithNewLine() {
+        assertTrue(testJobOne.toString().startsWith("\n"));
+    }
+
+    @Test
+    public void testEndsWithNewLine() {
+        assertTrue(testJobOne.toString().endsWith("\n"));
+    }
+
+    @Test
+    public void containsLabelForEachField() {
+        String testToString = "\nID: " + testJobOne.getId() + "\nName: Product tester\nEmployer: ACME\nLocation: Desert\nPosition Type: Quality control\nCore Competency: Persistence\n";
+        assertEquals(testJobOne.toString(), testToString);
+    }
+
+    @Test
+    public void hasEmptyField() {
+        assertTrue(emptyFieldJob.toString().contains("Data not available"));
+    }
+
 
 }
